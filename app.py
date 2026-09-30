@@ -100,7 +100,28 @@ if df.empty:
 
 else:
 
-    st.dataframe(df, use_container_width=True)
+    filtro_tipo = st.selectbox("Filtrar por tipo", ["Todos", "Receita", "Despesa"])
+
+    filtro_categoria = st.selectbox("Filtrar por tipo", ["Todas"] + sorted(df["categoria"].unique().tolist()))
+
+    data_inicial = st.date_input("Data inicial", value=df["data"].min().date())
+
+    data_final = st.date_input("Data final", value=df["data"].max().date())
+
+    df_filtrado = df.copy()
+
+    if filtro_tipo != "Todos":
+        df_filtrado = df_filtrado[df_filtrado["tipo"] == filtro_tipo]
+
+    if filtro_categoria != "Todas":
+        df_filtrado = df_filtrado[df_filtrado["categoria"] == filtro_categoria]
+
+    df_filtrado = df_filtrado[
+        (df_filtrado["data"].dt.date >= data_inicial) &
+        (df_filtrado["data"].dt.date <= data_final)
+    ]
+
+    st.dataframe(df_filtrado, use_container_width=True)
 
 # Processamento do Formulário
 
