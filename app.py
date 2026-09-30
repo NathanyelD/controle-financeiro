@@ -8,12 +8,55 @@ st.set_page_config(page_title="Controle Financeiro", page_icon="💰", layout="w
 ARQUIVO_MOVIMENTACOES = "dados/movimentacoes.csv"
 
 df = pd.read_csv(ARQUIVO_MOVIMENTACOES)
-df["data"] = pd.to_datetime(df["data"])
+df["data"] = pd.to_datetime(df["data"], format="mixed")
+
+# Cálculos financeiros
+
+total_receitas = df.loc[df["tipo"] == "Receita", "valor"].sum()
+
+total_despesas = df.loc[df["tipo"] == "Despesa", "valor"].sum()
+
+saldo = total_receitas - total_despesas
 
 
 # Título
 st.title("💰 Sistema de Controle Financeiro Pessoal")
 st.write("Acompanhe suas receitas, despesas e saldo de forma simples")  
+
+col1, col2, col3 = st.columns(3)
+
+with col1:
+    st.metric("💰 Saldo", f"R$ {saldo:,.2f}")
+
+    with col2:
+        st.metric("📈 Receitas", f"R$ {total_receitas:,.2f}")
+
+    with col3:
+        st.metric("📉 Despesas", f"R$ {total_despesas:,.2f}")
+
+# Gráfico de receitas x despesas
+
+st.divider()
+
+st.subheader("📊 Resumo financeiro")
+
+dados_grafico = pd.DataFrame({
+    "Tipo": ["Receitas", "Despesas"],
+    "Valor": [total_receitas, total_despesas]
+})
+
+st.bar_chart(dados_grafico, x="Tipo", y="Valor")
+
+
+# Gastos por categoria
+
+st.subheader("💸 Gastos por categoria")
+
+despesas = df[df["tipo"] == "Despesa"]
+
+gastos_categoria = despesas.groupby("categoria")["valor"].sum()
+
+st.bar_chart(gastos_categoria)
 
 # Cadastro de Movimentação
 
