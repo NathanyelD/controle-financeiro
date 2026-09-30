@@ -28,11 +28,11 @@ col1, col2, col3 = st.columns(3)
 with col1:
     st.metric("💰 Saldo", f"R$ {saldo:,.2f}")
 
-    with col2:
-        st.metric("📈 Receitas", f"R$ {total_receitas:,.2f}")
+with col2:
+    st.metric("📈 Receitas", f"R$ {total_receitas:,.2f}")
 
-    with col3:
-        st.metric("📉 Despesas", f"R$ {total_despesas:,.2f}")
+with col3:
+    st.metric("📉 Despesas", f"R$ {total_despesas:,.2f}")
 
 # Gráfico de receitas x despesas
 
