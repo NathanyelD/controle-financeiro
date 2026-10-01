@@ -1,6 +1,7 @@
 import streamlit as st  # Importa o Streamlit para criar a interface web
 import pandas as pd  # Importa o Pandas para trabalhar com tabelas e dados
 
+# para rodar use streamlit run app.py
 
 # Configuração de Página
 st.set_page_config(page_title="Controle Financeiro", page_icon="💰", layout="wide")  # Configura título, ícone e largura da página
