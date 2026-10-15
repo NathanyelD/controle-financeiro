@@ -501,3 +501,5 @@ Construir uma aplicação que permita ao usuário **registrar, visualizar, filtr
 <p align="center">
   Desenvolvido com Python, Streamlit e Pandas.
 </p>
+
+# para rodar o código use python -m streamlit run app.py
